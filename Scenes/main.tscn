@@ -14,6 +14,8 @@ noise = SubResource("FastNoiseLite_5rhky")
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_a3nbv")
+map_update_freq = 2.0
+enemy_spawn_freq = 0.5
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
