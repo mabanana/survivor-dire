@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bdq2yhcky3cms"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_a3nbv"]
+[ext_resource type="Script" path="res://Scenes/parallax_layer.gd" id="2_gg16x"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5rhky"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ojuen"]
+width = 2304
+height = 1296
+seamless = true
+seamless_blend_skirt = 1.0
+noise = SubResource("FastNoiseLite_5rhky")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_a3nbv")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+script = ExtResource("2_gg16x")
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture = SubResource("NoiseTexture2D_ojuen")
