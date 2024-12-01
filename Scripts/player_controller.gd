@@ -2,6 +2,7 @@ class_name PlayerController
 extends GameCharacter
 
 var attack_cd: Countdown
+var rid_closest: int
 
 func _ready() -> void:
 	attack_cd = Countdown.new(1/core.stats.attack_speed)
@@ -21,4 +22,9 @@ func _process(delta: float) -> void:
 	var tick = attack_cd.tick(delta)
 	if tick <= 0:
 		attack_cd.reset_cd()
+		_attack()
 		print("attack!!")
+
+func _attack():
+	if rid_closest and rid_closest in core.scene.entities:
+		core.scene.entities[rid_closest].hp -= core.stats.damage_amp*1
