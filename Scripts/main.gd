@@ -24,7 +24,7 @@ func _ready() -> void:
 	update_cd = Countdown.new(1/map_update_freq)
 	enemy_spawn_cd = Countdown.new(1/enemy_spawn_freq)
 	player_scene = load("res://Scenes/player.tscn")
-	square_scene = load("res://square_enemy.tscn")
+	square_scene = load("res://Scenes/square_enemy.tscn")
 	_add_player_to_scene()
 	pass # Replace with function body.
 
