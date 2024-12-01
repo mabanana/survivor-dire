@@ -14,3 +14,6 @@ func bind(core, core_changed):
 	
 func _on_core_changed(context, payload):
 	pass
+
+func die():
+	queue_free()

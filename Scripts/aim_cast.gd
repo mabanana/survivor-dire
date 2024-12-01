@@ -1,5 +1,4 @@
 class_name AimCast
-extends ShapeCast2D
 
 var core: CoreModel
 var core_changed: Signal
@@ -13,13 +12,16 @@ func bind(core, core_changed):
 func _on_core_changed(context, payload):
 	if context == CoreModel.Context.mouse_button_pressed:
 		if payload[CoreModel.PKey.input_action] == InputHandler.PlayerActions.AIM_ATTACK:
-			position = payload[CoreModel.PKey.mouse_position]
-			force_shapecast_update()
-			prints("collider results:",collision_result)
+			var colliders = get_colldiers(payload[CoreModel.PKey.mouse_position], core.stats.spell_radius)
+			prints("colliders:", colliders)
+			
 
-func _ready():
-	enabled = false
-	set_collision_mask(2)
-	shape = CircleShape2D.new()
-	shape.radius = 40
-	target_position = Vector2(0,0)
+func get_colldiers(position, radius):
+	var entities = core.scene.entities
+	var res = []
+	for rid in entities.keys():
+		if entities[rid].entity_type != core.EntityType.player:
+			var dist = (entities[rid].position - core.scene.player_pos).length()
+			if dist <= radius:
+				res.append(rid)
+	return res

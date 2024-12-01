@@ -12,7 +12,8 @@ enum Context {
 	key_input_pressed,
 	key_input_released,
 	event_mouse_moved,
-	
+	damage_started,
+	damage_ended,
 }
 
 enum EntityType {
@@ -28,6 +29,8 @@ enum PKey {
 	input_as_text,
 	mouse_relative,
 	mouse_position,
+	amount,
+	num_targets,
 }
 
 func _init() -> void:
