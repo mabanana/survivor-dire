@@ -9,7 +9,8 @@ var core: CoreModel
 signal core_changed
 
 @export var map_update_freq: float
-@export var enemy_spawn_freq: float
+@export var enemy_spawn_time: float
+
 var update_cd: Countdown
 var enemy_spawn_cd: Countdown
 var spawn_rect: Vector2
@@ -22,7 +23,7 @@ func _ready() -> void:
 	core_changed.connect(_on_core_changed)
 	
 	update_cd = Countdown.new(1/map_update_freq)
-	enemy_spawn_cd = Countdown.new(1/enemy_spawn_freq)
+	enemy_spawn_cd = Countdown.new(1/enemy_spawn_time)
 	
 	player = player_scene.instantiate()
 	player.entity_type = CoreModel.EntityType.player
@@ -76,11 +77,14 @@ func _update_map():
 
 func _spawn_enemy(entity_type):
 	var x_or_y = randi_range(0,1)
-	var spawn_pos: Vector2
+	var spawn_pos = Vector2.ZERO
 	if x_or_y:
-		spawn_pos = Vector2(randi_range(0,spawn_rect.x), spawn_rect.y * randi_range(0,1))
+		spawn_pos.x = randi_range(0,spawn_rect.x) - spawn_rect.x/2
+		spawn_pos.y = spawn_rect.y * randi_range(0,1) - spawn_rect.y/2
 	else:
-		spawn_pos = Vector2(spawn_rect.x * randi_range(0,1), randi_range(0,spawn_rect.y))
+		spawn_pos.x = spawn_rect.x * randi_range(0,1) - spawn_rect.x/2
+		spawn_pos.y = randi_range(0,spawn_rect.y) - spawn_rect.y/2
+		
 	var node: GameCharacter = square_scene.instantiate()
 	node.position = spawn_pos + core.scene.player_pos
 	node.entity_type = entity_type
@@ -104,7 +108,9 @@ func _damage_event(target_rids, amount, dealer = player.rid):
 			amount,
 			core.scene.nodes[dealer].name
 		])
-
+		var node:CharacterBody2D = core.scene.nodes[rid]
+		node.velocity = (node.position - player.position).normalized()*30
+		node.move_and_slide()
 
 func _on_core_changed(context, payload):
 	if context == core.Context.damage_started:

@@ -8,6 +8,7 @@ var rid_closest: int
 var base_damage: int = 1# replace with some weapon/class system
 
 func _ready() -> void:
+	core.stats.attack_speed *= 4
 	attack_cd = Countdown.new(1/core.stats.attack_speed)
 	spell_cd = Countdown.new(core.stats.spell_cooldown)
 
@@ -40,7 +41,7 @@ func _on_core_changed(context, payload):
 	elif context == CoreModel.Context.map_update:
 		_get_closest_enemy()
 
-
+# TODO: use raycast instead of position calculation for edges
 func _get_colldiers(target_pos, radius):
 	var entities = core.scene.entities
 	var res = []

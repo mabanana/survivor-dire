@@ -15,6 +15,7 @@ gradient = SubResource("Gradient_nouhg")
 noise = SubResource("FastNoiseLite_nd75e")
 
 [resource]
+resource_local_to_scene = true
 shader = ExtResource("1_4gbex")
 shader_parameter/progress = 0.0
 shader_parameter/width = 0.2

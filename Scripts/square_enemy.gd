@@ -1,6 +1,12 @@
 extends GameCharacter
-var shader_progress: float = 0
+# TODO: REMOVE SIGNAL LISTENING
+var shader_progress: float = 0.8
 var dead = false
+
+func _ready():
+	material = ShaderMaterial.new()
+	material.shader = load("res://Shaders/death_shader.gdshader")
+	core_changed.disconnect(_on_core_changed)
 
 func _physics_process(delta: float) -> void:
 	var direction = (core.scene.player_pos - position).normalized()
@@ -10,13 +16,9 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 
 func die():
-	queue_free()
 	dead = true
 	velocity = Vector2.ZERO
-	$Sprite2D.material = ShaderMaterial.new()
-	$Sprite2D.material.set("shader", load("res://Shaders/death_material.tres"))
-	$Sprite2D.material.set("shader_parameter/progress", 1)
-	
+	modulate.r += 0.5
 
 func _process(delta: float) -> void:
 	if dead:

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b10pd7gnbgt0a"]
+[gd_scene load_steps=7 format=3 uid="uid://b10pd7gnbgt0a"]
 
 [ext_resource type="Script" path="res://Scripts/square_enemy.gd" id="1_jxvnc"]
 [ext_resource type="Shader" path="res://Shaders/death_shader.gdshader" id="1_u8dud"]
+[ext_resource type="Material" uid="uid://cfbtdlccv4pqh" path="res://Shaders/death_material.tres" id="3_r7re1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eiull"]
 shader = ExtResource("1_u8dud")
@@ -17,6 +18,7 @@ shader_parameter/angle = 1.0
 
 [node name="SquareEnemy" type="CharacterBody2D"]
 material = SubResource("ShaderMaterial_eiull")
+scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_jxvnc")
@@ -26,5 +28,6 @@ shape = SubResource("RectangleShape2D_itgy2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.215686, 1, 1, 1)
+material = ExtResource("3_r7re1")
 scale = Vector2(20, 20)
 texture = SubResource("PlaceholderTexture2D_5xkq5")

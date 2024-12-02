@@ -3,10 +3,10 @@ class_name Countdown
 const UNIT: int = 100
 
 var cd: int
-var cd_start_value: int
+var cd_start_value: float
 
-func _init(cd_start_value: int):
-	self.cd_start_value = cd_start_value * 100
+func _init(cd_start_value: float):
+	self.cd_start_value = cd_start_value * UNIT
 
 func tick(delta: float):
 	if cd > 0:
