@@ -14,7 +14,6 @@ func get_colldiers(target_pos, radius):
 	target_position = Vector2.ZERO
 	force_shapecast_update()
 	var collision_data = _get_collision_result()
-	print(collision_data)
 	for collision in collision_data:
 		res.append(collision.collider.rid)
 

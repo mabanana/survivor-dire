@@ -45,7 +45,8 @@ func _on_core_changed(context, payload):
 		_get_closest_enemy()
 
 func _get_colldiers(mouse_pos, radius):
-	return aim_cast.get_colldiers(mouse_pos + position, radius)
+	print("mouse_pos", mouse_pos)
+	return aim_cast.get_colldiers(mouse_pos - position, radius)
 
 func _attack(rid_array):
 	for i in range(len(rid_array)):
