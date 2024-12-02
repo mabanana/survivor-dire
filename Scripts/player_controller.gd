@@ -4,6 +4,7 @@ extends GameCharacter
 var attack_cd: Countdown
 var spell_cd: Countdown
 var rid_closest: int
+var aim_cast: AimCast
 
 var base_damage: int = 1# replace with some weapon/class system
 
@@ -11,6 +12,8 @@ func _ready() -> void:
 	core.stats.attack_speed *= 4
 	attack_cd = Countdown.new(1/core.stats.attack_speed)
 	spell_cd = Countdown.new(core.stats.spell_cooldown)
+	aim_cast = AimCast.new()
+	add_child(aim_cast)
 
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -41,16 +44,8 @@ func _on_core_changed(context, payload):
 	elif context == CoreModel.Context.map_update:
 		_get_closest_enemy()
 
-# TODO: use raycast instead of position calculation for edges
-func _get_colldiers(target_pos, radius):
-	var entities = core.scene.entities
-	var res = []
-	for rid in entities.keys():
-		if entities[rid].entity_type != core.EntityType.player:
-			var dist = (entities[rid].position - target_pos).length()
-			if dist <= radius:
-				res.append(rid)
-	return res
+func _get_colldiers(mouse_pos, radius):
+	return aim_cast.get_colldiers(mouse_pos + position, radius)
 
 func _attack(rid_array):
 	for i in range(len(rid_array)):
