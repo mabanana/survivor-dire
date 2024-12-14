@@ -18,11 +18,20 @@ func _physics_process(delta: float) -> void:
 func die():
 	dead = true
 	velocity = Vector2.ZERO
-	modulate.r += 0.5
+	# 0 is left and measures degrees clockwise
+	var angle = rad_to_deg(core.scene.player_pos.angle_to_point(position))
+	if angle < 0:
+		angle = 360 + angle
+	#print("angle: ",angle)
+	var quarters = int(angle/90)
+	rotate(deg_to_rad(quarters*90 + 180))
+	angle -= quarters * 90
+	#prints("angle: rotate", quarters, "quarters then rotate", angle, "degrees",1 - angle/90.0 )
+	$Sprite2D.material.set("shader_parameter/angle", 1 - angle/90.0)
 
 func _process(delta: float) -> void:
 	if dead:
 		$Sprite2D.material.set("shader_parameter/progress", shader_progress)
-		shader_progress += delta * 1
-		if shader_progress >= 1.5:
+		shader_progress += delta * 0.5
+		if shader_progress >= 1.2:
 			queue_free()
