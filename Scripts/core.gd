@@ -1,7 +1,7 @@
 class_name CoreModel
 
 var stats: CoreStats
-var inventory: CoreInventory
+var progress: CoreProgression
 var scene: CoreScene
 var rid_counter: int
 
@@ -35,7 +35,7 @@ enum PKey {
 
 func _init() -> void:
 	stats = CoreStats.create_new_player_stats()
-	inventory = CoreInventory.new()
+	progress = CoreProgression.new()
 	scene = CoreScene.new()
 
 func gen_id():

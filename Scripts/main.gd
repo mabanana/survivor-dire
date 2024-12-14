@@ -3,6 +3,7 @@ extends Node2D
 
 @onready var player_scene: PackedScene = preload("res://Scenes/player.tscn")
 @onready var square_scene: PackedScene = preload("res://Scenes/square_enemy.tscn")
+@onready var hud_scene: PackedScene = preload("res://Scenes/hud.tscn")
 var player: PlayerController
 
 var core: CoreModel
@@ -16,6 +17,7 @@ var enemy_spawn_cd: Countdown
 var spawn_rect: Vector2
 var aim_cast: AimCast
 var input_handler: InputHandler
+var hud: HudController
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,13 +29,16 @@ func _ready() -> void:
 	
 	player = player_scene.instantiate()
 	player.entity_type = CoreModel.EntityType.player
+	hud = hud_scene.instantiate()
 	#aim_cast = AimCast.new()
 	input_handler = InputHandler.new()
 	
 	input_handler.bind(core, core_changed)
+	hud.bind(core, core_changed)
 	#aim_cast.bind(core, core_changed)
 	
 	add_child(input_handler)
+	%CanvasLayer.add_child(hud)
 	#add_child(aim_cast)
 	_add_child_to_scene(player)
 	
@@ -72,6 +77,7 @@ func _update_map():
 		core.scene.entities[rid].position = core.scene.nodes[rid].position
 		if rid != player.rid: # for enemies
 			if core.scene.entities[rid].hp <= 0:
+				_on_enemy_death(rid)
 				_despawn_enemy(rid)
 	core_changed.emit(core.Context.map_update, null)
 
@@ -95,10 +101,17 @@ func _spawn_enemy(entity_type):
 
 func _despawn_enemy(rid):
 	var enemy = core.scene.nodes[rid]
-	prints(core.scene.nodes[rid].entity_type, "despawned")
+	prints(core.EntityType.keys()[enemy.entity_type], "despawned")
 	core.scene.entities.erase(rid)
 	core.scene.nodes.erase(rid)
 	enemy.die()
+
+func _on_enemy_death(rid):
+	var entity: EntityModel = core.scene.entities[rid]
+	print("a %s has been killed." % [core.EntityType.keys()[entity.entity_type]])
+	core.progress.exp += 1
+	core.progress.kill_count += 1
+	
 
 func _damage_event(target_rids, amount, dealer = player.rid):
 	for rid in target_rids:

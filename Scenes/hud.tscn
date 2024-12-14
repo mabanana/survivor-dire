@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://d00ylv51pamue"]
+
+[ext_resource type="Script" path="res://Scripts/hud.gd" id="1_q5mis"]
+
+[node name="Hud" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_q5mis")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Hp" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Hp"]
+layout_mode = 2
+text = "HP"
+
+[node name="HpNum" type="Label" parent="VBoxContainer/Hp"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Xp" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Xp"]
+layout_mode = 2
+text = "XP"
+
+[node name="XpNum" type="Label" parent="VBoxContainer/Xp"]
+unique_name_in_owner = true
+layout_mode = 2
