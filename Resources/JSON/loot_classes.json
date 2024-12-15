@@ -5,12 +5,17 @@
 			"items": [
 				{
 					"name": "GOLD_DROP",
-					"type": "PickUp",
+					"type": "Gold",
 					"weight": 5
 				},
 				{
 					"name": "HEALTH_POT",
-					"type": "PickUp",
+					"type": "HP",
+					"weight": 2
+				},
+				{
+					"name": "XP_CLUMP",
+					"type": "XP",
 					"weight": 2
 				},
 				{

@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvdnapxe3f5ie"]
+
+[ext_resource type="Script" path="res://Scripts/pickup_pop_up.gd" id="1_4d1ai"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0y3lp"]
+size = Vector2(10, 10)
+
+[node name="PickupPopUp" type="HBoxContainer"]
+script = ExtResource("1_4d1ai")
+
+[node name="Plus" type="Label" parent="."]
+layout_mode = 2
+text = "+"
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 2
+texture = SubResource("PlaceholderTexture2D_0y3lp")
+expand_mode = 2
+
+[node name="X" type="Label" parent="."]
+layout_mode = 2
+text = "x
+"
+
+[node name="NumAmount" type="Label" parent="."]
+layout_mode = 2

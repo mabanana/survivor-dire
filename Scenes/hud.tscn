@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://d00ylv51pamue"]
+[gd_scene load_steps=3 format=3 uid="uid://d00ylv51pamue"]
 
 [ext_resource type="Script" path="res://Scripts/hud.gd" id="1_q5mis"]
+[ext_resource type="Texture2D" uid="uid://d2jqyvoneuhgi" path="res://icon.svg" id="2_jdari"]
 
 [node name="Hud" type="Control"]
 layout_mode = 3
@@ -11,34 +12,34 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_q5mis")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="TopLeft" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Hp" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Hp" type="HBoxContainer" parent="TopLeft"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/Hp"]
+[node name="Label" type="Label" parent="TopLeft/Hp"]
 layout_mode = 2
 text = "HP"
 
-[node name="HpNum" type="Label" parent="VBoxContainer/Hp"]
+[node name="HpNum" type="Label" parent="TopLeft/Hp"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Xp" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Xp" type="HBoxContainer" parent="TopLeft"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/Xp"]
+[node name="Label" type="Label" parent="TopLeft/Xp"]
 layout_mode = 2
 text = "XP"
 
-[node name="XpNum" type="Label" parent="VBoxContainer/Xp"]
+[node name="XpNum" type="Label" parent="TopLeft/Xp"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="BottomRight" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -50,10 +51,25 @@ offset_top = -40.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="KillCount" type="Label" parent="HBoxContainer"]
+[node name="KillCount" type="Label" parent="BottomRight"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="Label" type="Label" parent="BottomRight"]
 layout_mode = 2
 text = "K.O."
+
+[node name="Buttons" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="Inventory" type="TextureRect" parent="Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("2_jdari")
+expand_mode = 2

@@ -14,10 +14,24 @@ func drop_loot(loot_class: CoreModel.LootClass, target_name: String, target_posi
 	if loot_class or loot_class == 0:
 		var loot_table = get_loot_table(loot_class)
 		var loot = Randomizer.roll_loot(loot_table)
+		var amount = 1
 		if loot["type"] == "LootClass":
 			drop_loot(core.LootClass[loot["name"]], target_name, target_position)
 			return
-		prints("Loot Dropped by", target_name, loot["name"])
+		elif loot["type"] == "Gold":
+			amount = randi_range(1,100)
+			core.progress.gold += amount
+		elif loot["type"] == "HP":
+			amount = randi_range(1,10)
+			core.stats.hp += amount
+		elif loot["type"] == "XP":
+			amount = randi_range(1,100)
+			core.progress.exp += amount
+		prints("Loot Dropped by", target_name, loot["name"], "x", amount)
+		core_changed.emit(CoreModel.Context.loot_dropped, {
+			CoreModel.PKey.loot_id: loot["name"],
+			CoreModel.PKey.amount: amount,
+		})
 	else:
 		print("no loot from this one.")
 

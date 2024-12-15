@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bdq2yhcky3cms"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_a3nbv"]
-[ext_resource type="Script" path="res://Scenes/parallax_layer.gd" id="2_gg16x"]
+[ext_resource type="Script" path="res://Scripts/parallax_layer.gd" id="2_gg16x"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_5rhky"]
 
@@ -15,7 +15,7 @@ noise = SubResource("FastNoiseLite_5rhky")
 [node name="Main" type="Node2D"]
 script = ExtResource("1_a3nbv")
 map_update_freq = 2.0
-enemy_spawn_time = 0.5
+enemy_spawn_time = 2.0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 

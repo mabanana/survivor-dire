@@ -15,6 +15,7 @@ enum Context {
 	damage_started,
 	damage_ended,
 	enemy_died,
+	loot_dropped,
 }
 
 enum EntityType {
@@ -33,6 +34,7 @@ enum PKey {
 	amount,
 	num_targets,
 	loot_class,
+	loot_id,
 }
 
 enum LootClass {
