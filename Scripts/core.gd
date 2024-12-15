@@ -14,6 +14,7 @@ enum Context {
 	event_mouse_moved,
 	damage_started,
 	damage_ended,
+	enemy_died,
 }
 
 enum EntityType {
@@ -31,6 +32,13 @@ enum PKey {
 	mouse_position,
 	amount,
 	num_targets,
+	loot_class,
+}
+
+enum LootClass {
+	BASIC_1,
+	ELITE_1,
+	ITEM_LIST,
 }
 
 func _init() -> void:

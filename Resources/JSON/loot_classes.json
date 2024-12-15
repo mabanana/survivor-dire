@@ -1,0 +1,54 @@
+{
+	"loot_classes": [
+		{
+			"loot_class": "BASIC_1",
+			"items": [
+				{
+					"name": "GOLD_DROP",
+					"type": "PickUp",
+					"weight": 5
+				},
+				{
+					"name": "HEALTH_POT",
+					"type": "PickUp",
+					"weight": 2
+				},
+				{
+					"name": "ITEM_LIST",
+					"type": "LootClass",
+					"weight": 1
+				},
+				{
+					"name": "NONE",
+					"type": "None",
+					"weight": 2
+				}
+			]
+		},
+		{
+			"loot_class": "ITEM_LIST",
+			"items": [
+				{
+					"name": "ITEM_A",
+					"type": "Item",
+					"weight": 1
+				},
+				{
+					"name": "ITEM_B",
+					"type": "Item",
+					"weight": 1
+				},
+				{
+					"name": "ITEM_C",
+					"type": "Item",
+					"weight": 1
+				},
+				{
+					"name": "ITEM_D",
+					"type": "Item",
+					"weight": 1
+				}
+			]
+		}
+	]
+}

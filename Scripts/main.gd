@@ -18,6 +18,7 @@ var spawn_rect: Vector2
 var aim_cast: AimCast
 var input_handler: InputHandler
 var hud: HudController
+var loot_manager: LootManager
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -31,13 +32,14 @@ func _ready() -> void:
 	player.entity_type = CoreModel.EntityType.player
 	hud = hud_scene.instantiate()
 	#aim_cast = AimCast.new()
-	input_handler = InputHandler.new()
+	input_handler = InputHandler.new(self)
+	loot_manager = LootManager.new()
 	
 	input_handler.bind(core, core_changed)
 	hud.bind(core, core_changed)
+	loot_manager.bind(core, core_changed)
 	#aim_cast.bind(core, core_changed)
 	
-	add_child(input_handler)
 	%CanvasLayer.add_child(hud)
 	#add_child(aim_cast)
 	_add_child_to_scene(player)
@@ -100,15 +102,21 @@ func _spawn_enemy(entity_type):
 	prints("Enemy spawned at", node.position)
 
 func _despawn_enemy(rid):
-	var enemy = core.scene.nodes[rid]
-	prints(core.EntityType.keys()[enemy.entity_type], "despawned")
+	var node: GameCharacter = core.scene.nodes[rid]
+	var entity: EntityModel = core.scene.entities[rid]
+	prints(entity.name, "despawned")
+	core_changed.emit(core.Context.enemy_died, {
+		CoreModel.PKey.target_rid: rid,
+		CoreModel.PKey.target_position: entity.position,
+		CoreModel.PKey.loot_class: entity.loot_class,
+	})
 	core.scene.entities.erase(rid)
 	core.scene.nodes.erase(rid)
-	enemy.die()
+	node.die()
 
 func _on_enemy_death(rid):
 	var entity: EntityModel = core.scene.entities[rid]
-	print("a %s has been killed." % [core.EntityType.keys()[entity.entity_type]])
+	print("a %s has been killed." % [entity.name])
 	core.progress.exp += 1
 	core.progress.kill_count += 1
 	

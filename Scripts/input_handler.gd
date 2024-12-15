@@ -1,7 +1,7 @@
 class_name InputHandler
-extends Node
 
 var input_map
+var scene
 
 var core: CoreModel
 var core_changed: Signal
@@ -43,7 +43,8 @@ enum PlayerActions {
 	AIM_ATTACK,
 }
  
-func _init():
+func _init(scene):
+	self.scene = scene
 	input_map = DEFAULT_INPUT_MAP
 	
 func handle_input(event: InputEvent) -> void:
@@ -59,7 +60,7 @@ func handle_input(event: InputEvent) -> void:
 		core_changed.emit(context, {
 				CoreModel.PKey.input_action : input_map[event.button_index], 
 				CoreModel.PKey.input_as_text : event.as_text(),
-				CoreModel.PKey.mouse_position: get_parent().get_global_mouse_position(),
+				CoreModel.PKey.mouse_position: scene.get_global_mouse_position(),
 				})
 		prints("InputHandler: mouse button", "pressed" if event.is_pressed() else "released", event.as_text())
 	elif event is InputEventKey and event.keycode in input_map:

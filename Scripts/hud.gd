@@ -6,6 +6,7 @@ var core_changed: Signal
 
 @onready var hp_num: Label = %HpNum
 @onready var xp_num: Label = %XpNum
+@onready var kill_count: Label = %KillCount
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,3 +26,4 @@ func bind(core: CoreModel, core_changed: Signal):
 func _on_core_changed(context, payload):
 	xp_num.text = str(core.progress.exp)
 	hp_num.text = str(core.stats.hp)
+	kill_count.text = str(core.progress.kill_count)
