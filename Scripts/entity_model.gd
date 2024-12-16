@@ -2,6 +2,7 @@ class_name EntityModel
 
 var name: String
 var hp: int
+var max_hp: int
 var damage: int
 var entity_type: CoreModel.EntityType
 var position: Vector2
@@ -16,15 +17,17 @@ func _init(entity_type) -> void:
 		CoreModel.EntityType.player:
 			self.name = "Player"
 			self.hp = 100
+			self.max_hp = hp
 			self.damage = 0
 			self.speed = 0
 			self.position = PH_POSITION
 			self.loot_class = CoreModel.LootClass.BASIC_1
 		CoreModel.EntityType.square:
 			self.name = "Square"
-			self.hp = 1
+			self.hp = 10
+			self.max_hp = hp
 			self.damage = 1
-			self.speed = 100
+			self.speed = 150
 			self.position = PH_POSITION
 			self.loot_class = CoreModel.LootClass.BASIC_1
 		_:

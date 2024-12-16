@@ -6,7 +6,10 @@ var core_changed: Signal
 
 @onready var hp_num: Label = %HpNum
 @onready var xp_num: Label = %XpNum
-@onready var kill_count: Label = %KillCount
+@onready var combo: Label = %Combo
+@onready var dmg_num: Label = %DmgNum
+@onready var atk_speed: Label = %ASNum
+
 @onready var inventory: TextureRect = %Inventory
 @onready var pickup_popup: PackedScene = preload("res://Scenes/pickup_pop_up.tscn")
 
@@ -28,7 +31,9 @@ func bind(core: CoreModel, core_changed: Signal):
 func _on_core_changed(context, payload):
 	xp_num.text = str(core.progress.exp)
 	hp_num.text = str(core.stats.hp)
-	kill_count.text = str(core.progress.kill_count)
+	combo.text = str(core.progress.combo)
+	dmg_num.text = str(int(core.stats.damage_amp))
+	atk_speed.text = str(int(core.stats.attack_speed))
 	
 	if context == CoreModel.Context.loot_dropped:
 		var new_pop: PickupPopup = pickup_popup.instantiate()

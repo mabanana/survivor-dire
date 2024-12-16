@@ -50,7 +50,7 @@ func _init(scene):
 func handle_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index in input_map:
 		var context
-		if event.is_pressed() and !event.is_echo():
+		if event.is_pressed():
 			context = CoreModel.Context.mouse_button_pressed
 		elif event.is_released():
 			context = CoreModel.Context.mouse_button_released

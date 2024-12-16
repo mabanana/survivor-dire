@@ -65,7 +65,7 @@ func _process(delta: float) -> void:
 				cd.reset_cd()
 				_spawn_enemy(CoreModel.EntityType.square)
 
-func _add_child_to_scene(child, bind = true):
+func _add_child_to_scene(child: Node2D, bind = true):
 	child.rid = core.gen_id()
 	if bind:
 		child.bind(core, core_changed)
@@ -132,6 +132,9 @@ func _damage_event(target_rids, amount, dealer = player.rid):
 		var node:CharacterBody2D = core.scene.nodes[rid]
 		node.velocity = (node.position - player.position).normalized()*30
 		node.move_and_slide()
+		if core.scene.entities[rid].hp != core.scene.entities[rid].max_hp:
+			node.hp_bar.visible = true
+			node.hp_bar.value = 100 * core.scene.entities[rid].hp / core.scene.entities[rid].max_hp
 
 func _on_core_changed(context, payload):
 	if context == core.Context.damage_started:

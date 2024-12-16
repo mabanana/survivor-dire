@@ -2,6 +2,7 @@ extends GameCharacter
 # TODO: REMOVE SIGNAL LISTENING
 var shader_progress: float = 0.8
 var dead = false
+@onready var hp_bar: ProgressBar = %ProgressBar
 
 func _ready():
 	material = ShaderMaterial.new()
@@ -17,6 +18,7 @@ func _physics_process(delta: float) -> void:
 
 func die():
 	dead = true
+	hp_bar.visible = false
 	velocity = Vector2.ZERO
 	# 0 is left and measures degrees clockwise
 	var angle = rad_to_deg(core.scene.player_pos.angle_to_point(position))

@@ -1,16 +1,14 @@
 class_name Countdown
 
-const UNIT: int = 100
-
-var cd: int
+var cd: float
 var cd_start_value: float
 
 func _init(cd_start_value: float):
-	self.cd_start_value = cd_start_value * UNIT
+	self.cd_start_value = cd_start_value
 
 func tick(delta: float):
 	if cd > 0:
-		cd -= UNIT * delta
+		cd -= delta
 	return cd
 	
 func reset_cd(new_cd = cd_start_value):

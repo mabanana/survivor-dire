@@ -39,25 +39,49 @@ text = "XP"
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="BottomRight" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -40.0
-grow_horizontal = 0
-grow_vertical = 0
+[node name="Dmg" type="HBoxContainer" parent="TopLeft"]
+layout_mode = 2
 
-[node name="KillCount" type="Label" parent="BottomRight"]
+[node name="Label" type="Label" parent="TopLeft/Dmg"]
+layout_mode = 2
+text = "DMG"
+
+[node name="DmgNum" type="Label" parent="TopLeft/Dmg"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="BottomRight"]
+[node name="AS" type="HBoxContainer" parent="TopLeft"]
 layout_mode = 2
-text = "K.O."
+
+[node name="Label" type="Label" parent="TopLeft/AS"]
+layout_mode = 2
+text = "AS"
+
+[node name="ASNum" type="Label" parent="TopLeft/AS"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ComboDisplay" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.5
+offset_top = -20.0
+offset_right = 32.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Combo" type="Label" parent="ComboDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ComboDisplay"]
+layout_mode = 2
+text = "Combo!"
 
 [node name="Buttons" type="HBoxContainer" parent="."]
 layout_mode = 1
