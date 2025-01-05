@@ -3,6 +3,8 @@ extends Node2D
 
 @onready var player_scene: PackedScene = preload("res://Scenes/player.tscn")
 @onready var square_scene: PackedScene = preload("res://Scenes/square_enemy.tscn")
+@onready var circle_scene: PackedScene = preload("res://Scenes/circle_enemy.tscn")
+@onready var donut_scene: PackedScene = preload("res://Scenes/donut_enemy.tscn")
 @onready var hud_scene: PackedScene = preload("res://Scenes/hud.tscn")
 var player: PlayerController
 
@@ -65,9 +67,11 @@ func _process(delta: float) -> void:
 			elif cd == enemy_spawn_cd:
 				cd.reset_cd()
 				#TODO: randomize spawn differently
-				var rand = randi_range(0,1)
+				var rand = randi_range(0,2)
 				if rand == 1:
 					_spawn_enemy(CoreModel.EntityType.circle)
+				elif rand == 2:
+					_spawn_enemy(CoreModel.EntityType.donut)
 				else:
 					_spawn_enemy(CoreModel.EntityType.square)
 
@@ -98,10 +102,14 @@ func _spawn_enemy(entity_type):
 	else:
 		spawn_pos.x = spawn_rect.x * randi_range(0,1) - spawn_rect.x/2
 		spawn_pos.y = randi_range(0,spawn_rect.y) - spawn_rect.y/2
-		
-	var node: GameCharacter = square_scene.instantiate()
-	if entity_type == core.EntityType.circle:
-		node.set_script(load("res://Scripts/circle_enemy.gd"))
+	var node: GameCharacter
+	if entity_type == core.EntityType.square:
+		node = square_scene.instantiate()
+	elif entity_type == core.EntityType.circle:
+		node = circle_scene.instantiate()
+	elif entity_type == core.EntityType.donut:
+		node = donut_scene.instantiate()
+	
 	node.position = spawn_pos + core.scene.player_pos
 	node.entity_type = entity_type
 	node.bind(core, core_changed)

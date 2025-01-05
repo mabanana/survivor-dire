@@ -1,9 +1,9 @@
 shader_type canvas_item;
 
 //programatically change this if you want to, remove the progress based on time.
-uniform float progress : hint_range(-1.0,2.0) = -0.1;
+uniform float progress : hint_range(-1.0,2.0) = 0.1;
 //the width of the burn area, higher values makes the burn wider, 1 makes the burn cover the whole sprite
-uniform float width : hint_range(0.0,2.0) = .4;
+uniform float width : hint_range(0.0,2.0) = 0.4;
 
 //Noise to sample from for the burning
 uniform sampler2D noise;
@@ -35,4 +35,19 @@ void fragment() {
 	vec4 curve_value = texture(colorCurve,vec2(value));
 	COLOR = mix(COLOR, curve_value, value);
 	COLOR.a = min(texture(TEXTURE,UV).a,COLOR.a);
+
+    // UV coordinates range from 0.0 to 1.0
+    vec2 center = vec2(0.5, 0.5);
+    
+    // Compute the distance from the current pixel to the center
+    float dist = distance(UV, center);
+    float transparency = normalize(0.5 - dist);
+    COLOR.a = COLOR.a * transparency;
+	transparency = 1.0 - normalize(0.25 - dist);
+	COLOR.a = COLOR.a * transparency;
 }
+
+//void light() {
+	// Called for every pixel for every light affecting the CanvasItem.
+	// Uncomment to replace the default light processing function with this one.
+//}

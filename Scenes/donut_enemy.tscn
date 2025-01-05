@@ -1,40 +1,44 @@
-[gd_scene load_steps=8 format=3 uid="uid://by0oyfvpv0oyv"]
+[gd_scene load_steps=10 format=3 uid="uid://by0oyfvpv0oyv"]
 
 [ext_resource type="Script" path="res://Scripts/donut_enemy.gd" id="1_b0ev7"]
 [ext_resource type="PackedScene" uid="uid://dia3678c8f61b" path="res://Scenes/health_bar.tscn" id="2_fsh11"]
-[ext_resource type="Material" uid="uid://cfbtdlccv4pqh" path="res://Shaders/death_material.tres" id="2_mcv8w"]
+[ext_resource type="Shader" path="res://Shaders/donut_enemy.gdshader" id="3_yqty2"]
+[ext_resource type="Texture2D" uid="uid://cibfachokvau4" path="res://Resources/death_gradient.tres" id="4_ur8qs"]
+[ext_resource type="Texture2D" uid="uid://dvsnbbjwxpv5a" path="res://Resources/death_noise_texture.tres" id="5_0pw2d"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_eiull"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y16w3"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_xjnu4"]
-radius = 10.0
-height = 20.0
-radial_segments = 4
-rings = 10
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3m3rf"]
+resource_local_to_scene = true
+shader = ExtResource("3_yqty2")
+shader_parameter/progress = -0.1
+shader_parameter/width = 0.2
+shader_parameter/timed = false
+shader_parameter/speed = 1.0
+shader_parameter/angle = 0.0
+shader_parameter/noise = ExtResource("5_0pw2d")
+shader_parameter/colorCurve = ExtResource("4_ur8qs")
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_5xkq5"]
+size = Vector2(4, 4)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wncmx"]
 
 [node name="DonutEnemy" type="CharacterBody2D"]
-material = SubResource("ShaderMaterial_eiull")
+material = SubResource("ShaderMaterial_y16w3")
 scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_b0ev7")
 
 [node name="HealthBar" parent="." instance=ExtResource("2_fsh11")]
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 unique_name_in_owner = true
-clip_children = 2
-mesh = SubResource("SphereMesh_xjnu4")
 
-[node name="Sprite2D" type="Sprite2D" parent="MeshInstance2D"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 modulate = Color(0.215686, 1, 1, 1)
-material = ExtResource("2_mcv8w")
-scale = Vector2(20, 20)
+material = SubResource("ShaderMaterial_3m3rf")
+scale = Vector2(5, 5)
 texture = SubResource("PlaceholderTexture2D_5xkq5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -1,26 +1,16 @@
-[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://cfbtdlccv4pqh"]
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://cfbtdlccv4pqh"]
 
 [ext_resource type="Shader" path="res://Shaders/death_shader.gdshader" id="1_4gbex"]
-
-[sub_resource type="Gradient" id="Gradient_nouhg"]
-offsets = PackedFloat32Array(0.434426, 0.598361, 0.770492)
-colors = PackedColorArray(0, 0, 0, 1, 1, 0.258333, 0.11, 1, 0.93, 0.93, 0.93, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_m7wtu"]
-gradient = SubResource("Gradient_nouhg")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_nd75e"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ii3mo"]
-noise = SubResource("FastNoiseLite_nd75e")
+[ext_resource type="Texture2D" uid="uid://cibfachokvau4" path="res://Resources/death_gradient.tres" id="2_l73pc"]
+[ext_resource type="Texture2D" uid="uid://dvsnbbjwxpv5a" path="res://Resources/death_noise_texture.tres" id="3_eqqqk"]
 
 [resource]
 resource_local_to_scene = true
 shader = ExtResource("1_4gbex")
-shader_parameter/progress = 0.0
-shader_parameter/width = 0.2
+shader_parameter/progress = -0.1
+shader_parameter/width = 0.4
 shader_parameter/timed = false
 shader_parameter/speed = 1.0
 shader_parameter/angle = 0.0
-shader_parameter/noise = SubResource("NoiseTexture2D_ii3mo")
-shader_parameter/colorCurve = SubResource("GradientTexture2D_m7wtu")
+shader_parameter/noise = ExtResource("3_eqqqk")
+shader_parameter/colorCurve = ExtResource("2_l73pc")

@@ -1,16 +1,16 @@
 class_name EnemyCharacter
 extends GameCharacter
 
-var shader_progress: float = 0.8
+var shader_progress: float = -0.1
+var shader_speed: float = 1.5
 var dead = false
 @onready var hp_bar: ProgressBar = %HealthBar/ProgressBar
 @onready var sprite: Sprite2D = %Sprite2D
 @onready var collision_shape: CollisionShape2D = %CollisionShape2D
 
 func _ready():
-	material = ShaderMaterial.new()
+	# Set Shader Resource to be Local to Scene so progress is not shared between instances
 	# TODO: Cache shader in an asset loader
-	material.shader = load("res://Shaders/death_shader.gdshader")
 	core_changed.disconnect(_on_core_changed)
 
 func _physics_process(delta: float) -> void:
@@ -34,10 +34,11 @@ func die():
 	angle -= quarters * 90
 	#prints("angle: rotate", quarters, "quarters then rotate", angle, "degrees",1 - angle/90.0 )
 	sprite.material.set("shader_parameter/angle", 1 - angle/90.0)
+	shader_progress = 0.2
 
 func _process(delta: float) -> void:
 	if dead:
 		sprite.material.set("shader_parameter/progress", shader_progress)
-		shader_progress += delta * 0.5
-		if shader_progress >= 1.2:
+		shader_progress += delta * shader_speed
+		if shader_progress >= 1:
 			queue_free()
