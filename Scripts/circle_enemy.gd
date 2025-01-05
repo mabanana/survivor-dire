@@ -10,7 +10,6 @@ func _ready():
 	core_changed.disconnect(_on_core_changed)
 
 func _instantiate_collision_shape():
-	collision_shape = CollisionShape2D.new()
 	collision_shape.shape = CircleShape2D.new()
 	collision_shape.shape.radius = (sprite.get_rect().size * sprite.scale.x).x / 2
 	add_child(collision_shape)
