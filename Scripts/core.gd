@@ -24,6 +24,9 @@ enum Context {
 enum EntityType {
 	square,
 	player,
+	circle,
+	small_circle,
+	doughnut,
 }
 
 enum PKey {

@@ -1,18 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://b10pd7gnbgt0a"]
+[gd_scene load_steps=5 format=3 uid="uid://b10pd7gnbgt0a"]
 
 [ext_resource type="Script" path="res://Scripts/square_enemy.gd" id="1_jxvnc"]
-[ext_resource type="Shader" path="res://Shaders/death_shader.gdshader" id="1_u8dud"]
 [ext_resource type="Material" uid="uid://cfbtdlccv4pqh" path="res://Shaders/death_material.tres" id="3_r7re1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eiull"]
-shader = ExtResource("1_u8dud")
-shader_parameter/progress = 0.0
-shader_parameter/width = 0.2
-shader_parameter/timed = true
-shader_parameter/speed = 1.0
-shader_parameter/angle = 1.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_itgy2"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_5xkq5"]
 
@@ -22,15 +13,6 @@ scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_jxvnc")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_itgy2")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.215686, 1, 1, 1)
-material = ExtResource("3_r7re1")
-scale = Vector2(20, 20)
-texture = SubResource("PlaceholderTexture2D_5xkq5")
 
 [node name="Control" type="Control" parent="."]
 custom_minimum_size = Vector2(20, 2)
@@ -56,3 +38,13 @@ grow_horizontal = 2
 grow_vertical = 2
 value = 1.0
 show_percentage = false
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Sprite2D" type="Sprite2D" parent="MeshInstance2D"]
+unique_name_in_owner = true
+modulate = Color(0.215686, 1, 1, 1)
+material = ExtResource("3_r7re1")
+scale = Vector2(20, 20)
+texture = SubResource("PlaceholderTexture2D_5xkq5")

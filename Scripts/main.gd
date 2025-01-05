@@ -64,7 +64,12 @@ func _process(delta: float) -> void:
 				_update_map()
 			elif cd == enemy_spawn_cd:
 				cd.reset_cd()
-				_spawn_enemy(CoreModel.EntityType.square)
+				#TODO: randomize spawn differently
+				var rand = randi_range(0,1)
+				if rand == 1:
+					_spawn_enemy(CoreModel.EntityType.circle)
+				else:
+					_spawn_enemy(CoreModel.EntityType.square)
 
 func _add_child_to_scene(child: Node2D, bind = true):
 	child.rid = core.gen_id()
@@ -95,6 +100,8 @@ func _spawn_enemy(entity_type):
 		spawn_pos.y = randi_range(0,spawn_rect.y) - spawn_rect.y/2
 		
 	var node: GameCharacter = square_scene.instantiate()
+	if entity_type == core.EntityType.circle:
+		node.set_script(load("res://Scripts/circle_enemy.gd"))
 	node.position = spawn_pos + core.scene.player_pos
 	node.entity_type = entity_type
 	node.bind(core, core_changed)

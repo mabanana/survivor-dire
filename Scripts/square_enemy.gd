@@ -1,13 +1,24 @@
+class_name EnemyCharacter
 extends GameCharacter
-# TODO: REMOVE SIGNAL LISTENING
+
 var shader_progress: float = 0.8
 var dead = false
 @onready var hp_bar: ProgressBar = %ProgressBar
+@onready var sprite: Sprite2D = %Sprite2D
+var collision_shape: CollisionShape2D
 
 func _ready():
 	material = ShaderMaterial.new()
+	# TODO: Cache shader in an asset loader
 	material.shader = load("res://Shaders/death_shader.gdshader")
+	_instantiate_collision_shape()
 	core_changed.disconnect(_on_core_changed)
+
+func _instantiate_collision_shape():
+	collision_shape = CollisionShape2D.new()
+	collision_shape.shape = RectangleShape2D.new()
+	collision_shape.shape.set_size(sprite.get_rect().size * sprite.scale.x)
+	add_child(collision_shape)
 
 func _physics_process(delta: float) -> void:
 	var direction = (core.scene.player_pos - position).normalized()
@@ -29,11 +40,11 @@ func die():
 	rotate(deg_to_rad(quarters*90 + 180))
 	angle -= quarters * 90
 	#prints("angle: rotate", quarters, "quarters then rotate", angle, "degrees",1 - angle/90.0 )
-	$Sprite2D.material.set("shader_parameter/angle", 1 - angle/90.0)
+	sprite.material.set("shader_parameter/angle", 1 - angle/90.0)
 
 func _process(delta: float) -> void:
 	if dead:
-		$Sprite2D.material.set("shader_parameter/progress", shader_progress)
+		sprite.material.set("shader_parameter/progress", shader_progress)
 		shader_progress += delta * 0.5
 		if shader_progress >= 1.2:
 			queue_free()
