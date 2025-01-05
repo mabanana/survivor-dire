@@ -26,7 +26,7 @@ enum EntityType {
 	player,
 	circle,
 	small_circle,
-	doughnut,
+	donut,
 }
 
 enum PKey {

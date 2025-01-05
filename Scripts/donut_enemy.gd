@@ -1,2 +1,2 @@
-class_name CircleEnemy
+class_name DonutEnemy
 extends EnemyCharacter

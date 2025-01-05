@@ -46,8 +46,8 @@ func _init(entity_type) -> void:
 			self.speed = 200
 			self.position = PH_POSITION
 			self.loot_class = CoreModel.LootClass.BASIC_1
-		CoreModel.EntityType.doughnut:
-			self.name = "Doughnut"
+		CoreModel.EntityType.donut:
+			self.name = "Donut"
 			self.hp = 20
 			self.max_hp = hp
 			self.damage = 20

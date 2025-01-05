@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://b10pd7gnbgt0a"]
+[gd_scene load_steps=7 format=3 uid="uid://b10pd7gnbgt0a"]
 
 [ext_resource type="Script" path="res://Scripts/square_enemy.gd" id="1_jxvnc"]
+[ext_resource type="PackedScene" uid="uid://dia3678c8f61b" path="res://Scenes/health_bar.tscn" id="2_w22gn"]
 [ext_resource type="Material" uid="uid://cfbtdlccv4pqh" path="res://Shaders/death_material.tres" id="3_r7re1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eiull"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_5xkq5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a54h3"]
 
 [node name="SquareEnemy" type="CharacterBody2D"]
 material = SubResource("ShaderMaterial_eiull")
@@ -14,35 +17,10 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_jxvnc")
 
-[node name="Control" type="Control" parent="."]
-custom_minimum_size = Vector2(20, 2)
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -10.0
-offset_top = -12.0
-offset_right = 10.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ProgressBar" type="ProgressBar" parent="Control"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-value = 1.0
-show_percentage = false
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+[node name="HealthBar" parent="." instance=ExtResource("2_w22gn")]
 unique_name_in_owner = true
 
-[node name="Sprite2D" type="Sprite2D" parent="MeshInstance2D"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 modulate = Color(0.215686, 1, 1, 1)
 material = ExtResource("3_r7re1")
@@ -51,3 +29,4 @@ texture = SubResource("PlaceholderTexture2D_5xkq5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_a54h3")

@@ -3,7 +3,7 @@ extends GameCharacter
 
 var shader_progress: float = 0.8
 var dead = false
-@onready var hp_bar: ProgressBar = %ProgressBar
+@onready var hp_bar: ProgressBar = %HealthBar/ProgressBar
 @onready var sprite: Sprite2D = %Sprite2D
 @onready var collision_shape: CollisionShape2D = %CollisionShape2D
 
@@ -11,13 +11,7 @@ func _ready():
 	material = ShaderMaterial.new()
 	# TODO: Cache shader in an asset loader
 	material.shader = load("res://Shaders/death_shader.gdshader")
-	_instantiate_collision_shape()
 	core_changed.disconnect(_on_core_changed)
-
-func _instantiate_collision_shape():
-	collision_shape.shape = RectangleShape2D.new()
-	collision_shape.shape.set_size(sprite.get_rect().size * sprite.scale.x)
-	add_child(collision_shape)
 
 func _physics_process(delta: float) -> void:
 	var direction = (core.scene.player_pos - position).normalized()
