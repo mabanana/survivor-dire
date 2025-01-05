@@ -7,7 +7,7 @@ extends Node2D
 var player: PlayerController
 
 var core: CoreModel
-signal core_changed
+var core_changed: Signal
 
 @export var map_update_freq: float
 @export var enemy_spawn_time: float
@@ -23,6 +23,7 @@ var loot_manager: LootManager
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	core = CoreModel.new()
+	core_changed = core.core_changed
 	core_changed.connect(_on_core_changed)
 	
 	update_cd = Countdown.new(1/map_update_freq)
@@ -81,7 +82,7 @@ func _update_map():
 			if core.scene.entities[rid].hp <= 0:
 				_on_enemy_death(rid)
 				_despawn_enemy(rid)
-	core_changed.emit(core.Context.map_update, null)
+	core.emit_changed(core.Context.map_update, null)
 
 func _spawn_enemy(entity_type):
 	var x_or_y = randi_range(0,1)
@@ -105,7 +106,7 @@ func _despawn_enemy(rid):
 	var node: GameCharacter = core.scene.nodes[rid]
 	var entity: EntityModel = core.scene.entities[rid]
 	prints(entity.name, "despawned")
-	core_changed.emit(core.Context.enemy_died, {
+	core.emit_changed(core.Context.enemy_died, {
 		CoreModel.PKey.target_rid: rid,
 		CoreModel.PKey.target_position: entity.position,
 		CoreModel.PKey.loot_class: entity.loot_class,

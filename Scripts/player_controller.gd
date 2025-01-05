@@ -63,7 +63,7 @@ func _attack(rid_array):
 				core.scene.nodes[rid_array[i]].name,
 				core.stats.damage_amp
 				])
-			core_changed.emit(CoreModel.Context.damage_started, 
+			core.emit_changed(CoreModel.Context.damage_started, 
 			{
 				core.PKey.num_targets: 1,
 				core.PKey.amount : core.stats.damage_amp,

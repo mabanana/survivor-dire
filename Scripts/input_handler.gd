@@ -57,7 +57,7 @@ func handle_input(event: InputEvent) -> void:
 		else:
 			print("ERROR: event mouse button that is neither pressed nor released detected")
 			return
-		core_changed.emit(context, {
+		core.emit_changed(context, {
 				CoreModel.PKey.input_action : input_map[event.button_index], 
 				CoreModel.PKey.input_as_text : event.as_text(),
 				CoreModel.PKey.mouse_position: scene.get_global_mouse_position(),
@@ -75,13 +75,13 @@ func handle_input(event: InputEvent) -> void:
 		else:
 			print("ERROR: event key press that is neither pressed nor released detected")
 			return
-		core_changed.emit(context, {
+		core.emit_changed(context, {
 			CoreModel.PKey.input_action: input_map[event.keycode], 
 			CoreModel.PKey.input_as_text : event.keycode
 			})
 		#prints("InputHandler: key", "pressed" if event.is_pressed() else "released", event.as_text())
 	elif event is InputEventMouseMotion:
-		core_changed.emit(CoreModel.Context.event_mouse_moved, {
+		core.emit_changed(CoreModel.Context.event_mouse_moved, {
 			CoreModel.PKey.mouse_relative: event.relative
 			})
 		#prints("InputHandler: mouse moved", event.relative)

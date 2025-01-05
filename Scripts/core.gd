@@ -3,7 +3,10 @@ class_name CoreModel
 var stats: CoreStats
 var progress: CoreProgression
 var scene: CoreScene
+var signal_bus: CoreSignalBus
 var rid_counter: int
+
+signal core_changed
 
 enum Context {
 	map_update,
@@ -47,7 +50,11 @@ func _init() -> void:
 	stats = CoreStats.create_new_player_stats()
 	progress = CoreProgression.new()
 	scene = CoreScene.new()
+	signal_bus = CoreSignalBus.new(self, core_changed)
 
 func gen_id():
 	rid_counter += 1
 	return rid_counter
+
+func emit_changed(context, payload):
+	signal_bus.emit_core_changed(context, payload)
