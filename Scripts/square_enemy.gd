@@ -21,6 +21,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 
 func die():
+	on_death()
 	dead = true
 	hp_bar.visible = false
 	velocity = Vector2.ZERO
@@ -42,3 +43,6 @@ func _process(delta: float) -> void:
 		shader_progress += delta * shader_speed
 		if shader_progress >= 1:
 			queue_free()
+			
+func on_death():
+	pass
