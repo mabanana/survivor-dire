@@ -5,6 +5,7 @@ extends Node2D
 @onready var square_scene: PackedScene = preload("res://Scenes/square_enemy.tscn")
 @onready var circle_scene: PackedScene = preload("res://Scenes/circle_enemy.tscn")
 @onready var donut_scene: PackedScene = preload("res://Scenes/donut_enemy.tscn")
+@onready var sm_circle_scene: PackedScene = preload("res://Scenes/small_circle_enemy.tscn")
 @onready var hud_scene: PackedScene = preload("res://Scenes/hud.tscn")
 var player: PlayerController
 
@@ -93,7 +94,7 @@ func _update_map():
 				_despawn_enemy(rid)
 	core.emit_changed(core.Context.map_update, null)
 
-func _spawn_enemy(entity_type):
+func _random_spawn_pos():
 	var x_or_y = randi_range(0,1)
 	var spawn_pos = Vector2.ZERO
 	if x_or_y:
@@ -102,13 +103,23 @@ func _spawn_enemy(entity_type):
 	else:
 		spawn_pos.x = spawn_rect.x * randi_range(0,1) - spawn_rect.x/2
 		spawn_pos.y = randi_range(0,spawn_rect.y) - spawn_rect.y/2
+	return spawn_pos
+	
+	
+func _spawn_enemy(entity_type, spawn_pos = _random_spawn_pos()):
 	var node: GameCharacter
-	if entity_type == core.EntityType.square:
-		node = square_scene.instantiate()
-	elif entity_type == core.EntityType.circle:
-		node = circle_scene.instantiate()
-	elif entity_type == core.EntityType.donut:
-		node = donut_scene.instantiate()
+	match entity_type:
+		core.EntityType.square:
+			node = square_scene.instantiate()
+		core.EntityType.circle:
+			node = circle_scene.instantiate()
+		core.EntityType.small_circle:
+			node = sm_circle_scene.instantiate()
+		core.EntityType.donut:
+			node = donut_scene.instantiate()
+		_:
+			print("entity type not found, failed to instantiate node scene.")
+			return
 	
 	node.position = spawn_pos + core.scene.player_pos
 	node.entity_type = entity_type
@@ -133,9 +144,9 @@ func _despawn_enemy(rid):
 func _on_enemy_death(rid):
 	var entity: EntityModel = core.scene.entities[rid]
 	print("a %s has been killed." % [entity.name])
+	# TODO: put progression somewhere else
 	core.progress.exp += 1
 	core.progress.kill_count += 1
-	
 
 func _damage_event(target_rids, amount, dealer = player.rid):
 	for rid in target_rids:
@@ -159,3 +170,22 @@ func _on_core_changed(context, payload):
 			payload[core.PKey.amount], 
 			payload[core.PKey.dealer_rid]
 			)
+	elif context == core.Context.circle_died:
+		_spawn_small_circles(payload[core.PKey.target_position])
+		prints("Main: spawning small circles from circle death at", payload[core.PKey.target_position])
+	elif context == core.Context.donut_center_click:
+		_on_donut_center_click()
+
+func _spawn_small_circles(position):
+	var pos_list = []
+	var R = 10
+	for i in range(3):
+		var rel_pos = R / 2 * Vector2.UP
+		rel_pos = rel_pos.rotated(360/3 * i)
+		pos_list.append(rel_pos)
+	for pos in pos_list:
+		_spawn_enemy(core.EntityType.small_circle, pos + position - player.position)
+	
+func _on_donut_center_click():
+	core.progress.combo = 0
+	print("Main: Don't press the center of the donut, combo removed")

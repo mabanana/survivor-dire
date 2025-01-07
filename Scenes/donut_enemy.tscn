@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://by0oyfvpv0oyv"]
+[gd_scene load_steps=11 format=3 uid="uid://by0oyfvpv0oyv"]
 
 [ext_resource type="Script" path="res://Scripts/donut_enemy.gd" id="1_b0ev7"]
 [ext_resource type="PackedScene" uid="uid://dia3678c8f61b" path="res://Scenes/health_bar.tscn" id="2_fsh11"]
@@ -24,6 +24,9 @@ size = Vector2(4, 4)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wncmx"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_h82du"]
+size = Vector2(7, 7)
+
 [node name="DonutEnemy" type="CharacterBody2D"]
 material = SubResource("ShaderMaterial_y16w3")
 scale = Vector2(3, 3)
@@ -44,3 +47,8 @@ texture = SubResource("PlaceholderTexture2D_5xkq5")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
 shape = SubResource("CircleShape2D_wncmx")
+
+[node name="ClickHitBox" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+texture = SubResource("PlaceholderTexture2D_h82du")

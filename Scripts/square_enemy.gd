@@ -12,6 +12,10 @@ func _ready():
 	# Set Shader Resource to be Local to Scene so progress is not shared between instances
 	# TODO: Cache shader in an asset loader
 	core_changed.disconnect(_on_core_changed)
+	on_ready()
+
+func on_ready():
+	pass
 
 func _physics_process(delta: float) -> void:
 	var direction = (core.scene.player_pos - position).normalized()

@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://bd5phphdoc1q"]
+
+[ext_resource type="Material" uid="uid://cfbtdlccv4pqh" path="res://Shaders/death_material.tres" id="1_jrvrk"]
+[ext_resource type="Script" path="res://Scripts/small_circle_enemy.gd" id="2_g1wpn"]
+[ext_resource type="PackedScene" uid="uid://dia3678c8f61b" path="res://Scenes/health_bar.tscn" id="3_qvmua"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_xjnu4"]
+radius = 4.2
+height = 8.4
+radial_segments = 4
+rings = 8
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_5xkq5"]
+size = Vector2(2, 2)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wncmx"]
+radius = 4.2
+
+[node name="SmallCircleEnemy" type="CharacterBody2D"]
+material = ExtResource("1_jrvrk")
+scale = Vector2(3, 3)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("2_g1wpn")
+
+[node name="HealthBar" parent="." instance=ExtResource("3_qvmua")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(10, 2)
+offset_left = -5.0
+offset_top = -8.0
+offset_right = 5.0
+offset_bottom = -6.0
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+unique_name_in_owner = true
+clip_children = 1
+mesh = SubResource("SphereMesh_xjnu4")
+
+[node name="Sprite2D" type="Sprite2D" parent="MeshInstance2D"]
+unique_name_in_owner = true
+modulate = Color(0.215686, 1, 1, 1)
+material = ExtResource("1_jrvrk")
+scale = Vector2(5, 5)
+texture = SubResource("PlaceholderTexture2D_5xkq5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("CircleShape2D_wncmx")

@@ -19,6 +19,8 @@ enum Context {
 	damage_ended,
 	enemy_died,
 	loot_dropped,
+	circle_died,
+	donut_center_click,
 }
 
 enum EntityType {

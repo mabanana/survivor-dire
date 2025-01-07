@@ -38,7 +38,7 @@ void fragment() {
 
     // UV coordinates range from 0.0 to 1.0
     vec2 center = vec2(0.5, 0.5);
-    
+
     // Compute the distance from the current pixel to the center
     float dist = distance(UV, center);
     float transparency = normalize(0.5 - dist);
