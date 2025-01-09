@@ -42,7 +42,9 @@ enum PKey {
 	amount,
 	num_targets,
 	loot_class,
-	loot_id,
+	loot_name,
+	loot_type,
+	attack_type,
 }
 
 enum LootClass {

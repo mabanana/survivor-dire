@@ -30,10 +30,27 @@ func bind(core: CoreModel, core_changed):
 
 func _on_core_changed(context, payload):
 	if context == core.Context.damage_ended:
-		print("damage ended")
-		_spawn_audio_player("auto_attack", -10, "Master", Vector2(1.8,1.9))
+		match payload[core.PKey.attack_type]:
+			"auto":
+				_spawn_audio_player("auto_attack", -10, "Master", Vector2(1.8,1.9))
+			"aoe":
+				_spawn_audio_player("aoe_attack", -20, "Master", Vector2(0.8,0.9))
+			"click":
+				_spawn_audio_player("click_attack", -18, "Master", Vector2(0.8,0.9))
+			_:
+				_spawn_audio_player("auto_attack", -10, "Master", Vector2(1.8,1.9))
 	elif context == core.Context.loot_dropped:
-		pass
+		match payload[core.PKey.loot_type]:
+			"Gold":
+				_spawn_audio_player("gold_pickup", 0, "Notification", Vector2(0.8,0.9))
+			"HP":
+				_spawn_audio_player("hp_pickup", 0, "Notification", Vector2(0.8,0.9))
+			"XP":
+				_spawn_audio_player("xp_pickup", 0, "Notification", Vector2(0.8,0.9))
+			"Artefact":
+				_spawn_audio_player("artefact_pickup", 0, "Notification", Vector2(0.8,0.9))
+			_:
+				pass
 		
 # TODO: use finite number of audio_players instead of instantiating new ones
 func _spawn_audio_player(sound_name: String, db_offset: float, bus = "Master", pitch_range: Vector2 = Vector2(0.95, 1.05), position: Vector2 = Vector2.ZERO):

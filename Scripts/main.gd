@@ -151,7 +151,12 @@ func _on_enemy_death(rid):
 	core.progress.exp += 1
 	core.progress.kill_count += 1
 
-func _damage_event(target_rids, amount, dealer = player.rid):
+func _damage_event(payload):
+	var target_rids = payload[core.PKey.target_rid]
+	var dealer = payload[core.PKey.dealer_rid]
+	var amount = payload[core.PKey.amount]
+	var attack_type = payload[core.PKey.attack_type]
+	
 	for rid in target_rids:
 		core.scene.entities[rid].hp -= amount
 		print("%s took %s damage from %s" % [
@@ -163,6 +168,7 @@ func _damage_event(target_rids, amount, dealer = player.rid):
 			core.PKey.target_rid : rid,
 			core.PKey.amount : amount,
 			core.PKey.dealer_rid : dealer,
+			core.PKey.attack_type : attack_type,
 		})
 		var node:CharacterBody2D = core.scene.nodes[rid]
 		node.velocity = (node.position - player.position).normalized()*30
@@ -173,11 +179,7 @@ func _damage_event(target_rids, amount, dealer = player.rid):
 
 func _on_core_changed(context, payload):
 	if context == core.Context.damage_started:
-		_damage_event(
-			payload[core.PKey.target_rid], 
-			payload[core.PKey.amount], 
-			payload[core.PKey.dealer_rid]
-			)
+		_damage_event(payload)
 	elif context == core.Context.circle_died:
 		_spawn_small_circles(payload[core.PKey.target_position])
 		prints("Main: spawning small circles from circle death at", payload[core.PKey.target_position])

@@ -29,7 +29,8 @@ func drop_loot(loot_class: CoreModel.LootClass, target_name: String, target_posi
 			core.progress.exp += amount
 		prints("Loot Dropped by", target_name, loot["name"], "x", amount)
 		core.emit_changed(CoreModel.Context.loot_dropped, {
-			CoreModel.PKey.loot_id: loot["name"],
+			CoreModel.PKey.loot_name: loot["name"],
+			CoreModel.PKey.loot_type: loot["type"],
 			CoreModel.PKey.amount: amount,
 		})
 	else:

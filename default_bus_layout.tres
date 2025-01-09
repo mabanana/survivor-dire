@@ -1,0 +1,14 @@
+[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://bjwdx6kb76cqg"]
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_7ixxm"]
+resource_name = "Compressor"
+
+[resource]
+bus/0/effect/0/effect = SubResource("AudioEffectCompressor_7ixxm")
+bus/0/effect/0/enabled = true
+bus/1/name = &"Notification"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"

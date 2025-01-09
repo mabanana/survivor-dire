@@ -6,6 +6,7 @@ var spell_cd: Countdown
 var rid_closest: int
 var aim_cast: AimCast
 var aoe_attack_xp = 1000
+var is_aoe = false
 
 func _ready() -> void:
 	attack_cd = Countdown.new(1/core.stats.attack_speed)
@@ -31,28 +32,33 @@ func _process(delta: float) -> void:
 			if cd == attack_cd:
 				attack_cd.reset_cd(1/core.stats.attack_speed)
 				if core.progress.exp > aoe_attack_xp:
-					_attack(_get_colldiers(aim_cast.position, core.stats.spell_radius))
+					_attack(_get_colldiers(aim_cast.position, core.stats.spell_radius), "aoe")
 				else:
-					_attack([rid_closest])
+					_attack([rid_closest], "auto")
 
 
 func _on_core_changed(context, payload):
 	if context == CoreModel.Context.mouse_button_pressed:
 		if payload[CoreModel.PKey.input_action] == InputHandler.PlayerActions.AIM_ATTACK:
-			var colliders = _get_colldiers(payload[CoreModel.PKey.mouse_position], core.stats.spell_radius)
+			var radius = core.stats.spell_radius if core.progress.exp > aoe_attack_xp else 1
+			var colliders = _get_colldiers(payload[CoreModel.PKey.mouse_position], radius)
 			if len(colliders) == 0:
 				core.progress.combo = 0
 			prints("colliders:", colliders)
-			_attack(colliders)
+			_attack(colliders, "aoe" if core.progress.exp > aoe_attack_xp else "click")
 	elif context == CoreModel.Context.map_update:
 		_get_closest_enemy()
 		
 
 func _get_colldiers(mouse_pos, radius):
 	print("mouse_pos", mouse_pos)
-	return aim_cast.get_colldiers(mouse_pos - position, radius)
+	var colliders = aim_cast.get_colldiers(mouse_pos - position, radius)
+	if core.progress.exp > aoe_attack_xp:
+		return colliders
+	else:
+		return [colliders[0]] if colliders else []
 
-func _attack(rid_array):
+func _attack(rid_array, attack_type):
 	core.stats.damage_amp = max(log(core.progress.combo) * core.stats.START_DA * 5, core.stats.START_DA)
 	core.stats.attack_speed = max(log(core.progress.combo) * core.stats.START_AS / log(10), core.stats.START_AS)
 	
@@ -70,6 +76,7 @@ func _attack(rid_array):
 				core.PKey.target_rid : [rid_array[i]],
 				core.PKey.dealer_rid : rid,
 				core.PKey.target_position : core.scene.entities[rid_array[i]].position,
+				core.PKey.attack_type : attack_type,
 			}) 
 			core.progress.combo += 1
 
