@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://bptityx2u5hu3"
-path="res://.godot/imported/dewath_2.wav-5122d487e9ac3da5969791304ead4330.sample"
+uid="uid://dtjn558cgn1sf"
+path="res://.godot/imported/death_2.wav-562917c44bdbe89eb6d01a184310c30a.sample"
 
 [deps]
 
-source_file="res://Resources/Sounds/dewath_2.wav"
-dest_files=["res://.godot/imported/dewath_2.wav-5122d487e9ac3da5969791304ead4330.sample"]
+source_file="res://Resources/Sounds/death_2.wav"
+dest_files=["res://.godot/imported/death_2.wav-562917c44bdbe89eb6d01a184310c30a.sample"]
 
 [params]
 
