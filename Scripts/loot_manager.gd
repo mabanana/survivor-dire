@@ -27,6 +27,12 @@ func drop_loot(loot_class: CoreModel.LootClass, target_name: String, target_posi
 		elif loot["type"] == "XP":
 			amount = randi_range(1,100)
 			core.progress.exp += amount
+		elif loot["type"] == "Artefact":
+			core.progress.items[loot["name"]] += 1
+		else:
+			print("no loot from this one.")
+			return
+			
 		prints("Loot Dropped by", target_name, loot["name"], "x", amount)
 		core.emit_changed(CoreModel.Context.loot_dropped, {
 			CoreModel.PKey.loot_name: loot["name"],

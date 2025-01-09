@@ -7,7 +7,11 @@ var kill_count: int
 var combo: int
 
 func _init() -> void:
-	items = {}
+	# TODO: fetch artefact list from data
+	items = {
+		"attack+": 0,
+		"attackspeed+": 0
+	}
 	gold = 0
 	exp = 0
 	kill_count = 0

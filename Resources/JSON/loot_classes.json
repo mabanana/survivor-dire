@@ -27,7 +27,17 @@
 					"name": "NONE",
 					"type": "None",
 					"weight": 2
-				}
+				},
+				{
+					"name": "Attack+",
+					"type": "Artefact",
+					"weight": 1
+				},
+				{
+					"name": "Attackspeed+",
+					"type": "Artefact",
+					"weight": 1
+				},
 			]
 		},
 		{
