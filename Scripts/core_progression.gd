@@ -9,8 +9,8 @@ var combo: int
 func _init() -> void:
 	# TODO: fetch artefact list from data
 	items = {
-		"attack+": 0,
-		"attackspeed+": 0
+		"Attack+": 0,
+		"Attackspeed+": 0
 	}
 	gold = 0
 	exp = 0
