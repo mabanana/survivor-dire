@@ -42,7 +42,6 @@ func drop_loot(loot_class: CoreModel.LootClass, target_name: String, target_posi
 	else:
 		print("no loot from this one.")
 
-
 func get_loot_table(loot_class: CoreModel.LootClass):
 	var loot_table = {}
 	for item in loot_classes[loot_class]:

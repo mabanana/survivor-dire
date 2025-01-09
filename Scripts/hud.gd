@@ -32,7 +32,7 @@ func _on_core_changed(context, payload):
 	xp_num.text = str(core.progress.exp)
 	hp_num.text = str(core.stats.hp)
 	combo.text = str(core.progress.combo)
-	dmg_num.text = str(int(core.stats.damage_amp))
+	dmg_num.text = str(int(core.stats.attack_damage * core.stats.damage_amp))
 	atk_speed.text = str(int(core.stats.attack_speed))
 	
 	if context == CoreModel.Context.loot_dropped:

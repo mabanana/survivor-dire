@@ -6,6 +6,7 @@ var xp: int
 var damage_amp: float
 var damage_reduc: float
 var attack_speed: float
+var attack_damage: float
 var move_speed: float
 var spell_radius: int
 var spell_cooldown: int
@@ -15,6 +16,7 @@ var attack_range: int
 const START_HP = 100
 const START_XP = 0
 const START_DA = 1.0
+const START_AD = 1.0
 const START_AS = 1.0
 const START_MS = 300.0
 const START_SR = 30.0
@@ -27,6 +29,7 @@ static func create_new_player_stats():
 	new.hp = START_HP
 	new.xp = START_XP
 	new.damage_amp = START_DA
+	new.attack_damage = START_AD
 	new.attack_speed = START_AS
 	new.move_speed = START_MS
 	new.spell_radius = START_SR

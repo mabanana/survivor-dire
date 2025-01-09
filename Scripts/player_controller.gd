@@ -59,20 +59,21 @@ func _get_colldiers(mouse_pos, radius):
 		return [colliders[0]] if colliders else []
 
 func _attack(rid_array, attack_type):
-	core.stats.damage_amp = max(log(core.progress.combo) * core.stats.START_DA * 5, core.stats.START_DA)
-	core.stats.attack_speed = max(log(core.progress.combo) * core.stats.START_AS / log(10), core.stats.START_AS)
+	_update_stats()
+	var damage = core.stats.damage_amp * core.stats.attack_damage
+	print(damage)
 	
 	for i in range(len(rid_array)):
 		if rid_array[i] and rid_array[i] in core.scene.entities:
 			print("%s attacked %s for %s damage" % [
 				core.scene.nodes[rid].name, 
 				core.scene.nodes[rid_array[i]].name,
-				core.stats.damage_amp
+				damage
 				])
 			core.emit_changed(CoreModel.Context.damage_started, 
 			{
 				core.PKey.num_targets: 1,
-				core.PKey.amount : core.stats.damage_amp,
+				core.PKey.amount : damage,
 				core.PKey.target_rid : [rid_array[i]],
 				core.PKey.dealer_rid : rid,
 				core.PKey.target_position : core.scene.entities[rid_array[i]].position,
@@ -80,6 +81,11 @@ func _attack(rid_array, attack_type):
 			}) 
 			core.progress.combo += 1
 
+func _update_stats():
+	core.stats.damage_amp = max(log(core.progress.combo) * core.stats.START_DA * 5, core.stats.START_DA)
+	core.stats.attack_speed = max(log(core.progress.combo) * core.stats.START_AS / log(10), core.stats.START_AS) + core.progress.items["Attackspeed+"]
+	core.stats.attack_damage = core.stats.START_AD + (core.progress.items["Attack+"] * 5)
+	prints("LootManager:", core.progress.items)
 
 func _get_closest_enemy():
 	var ents = core.scene.entities
