@@ -22,6 +22,7 @@ var aim_cast: AimCast
 var input_handler: InputHandler
 var hud: HudController
 var loot_manager: LootManager
+var sound_manager: SoundManager
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -38,8 +39,10 @@ func _ready() -> void:
 	#aim_cast = AimCast.new()
 	input_handler = InputHandler.new(self)
 	loot_manager = LootManager.new()
+	sound_manager = SoundManager.new(self)
 	
 	input_handler.bind(core, core_changed)
+	sound_manager.bind(core, core_changed)
 	hud.bind(core, core_changed)
 	loot_manager.bind(core, core_changed)
 	#aim_cast.bind(core, core_changed)
@@ -156,6 +159,11 @@ func _damage_event(target_rids, amount, dealer = player.rid):
 			amount,
 			core.scene.nodes[dealer].name
 		])
+		core.emit_changed(core.Context.damage_ended, {
+			core.PKey.target_rid : rid,
+			core.PKey.amount : amount,
+			core.PKey.dealer_rid : dealer,
+		})
 		var node:CharacterBody2D = core.scene.nodes[rid]
 		node.velocity = (node.position - player.position).normalized()*30
 		node.move_and_slide()
