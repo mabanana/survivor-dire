@@ -34,7 +34,9 @@ func _process(delta: float) -> void:
 				if core.progress.exp > aoe_attack_xp:
 					_attack(_get_colldiers(aim_cast.position, core.stats.spell_radius), "aoe")
 				else:
+					_get_closest_enemy()
 					_attack([rid_closest], "auto")
+					
 
 
 func _on_core_changed(context, payload):
@@ -44,14 +46,9 @@ func _on_core_changed(context, payload):
 			var colliders = _get_colldiers(payload[CoreModel.PKey.mouse_position], radius)
 			if len(colliders) == 0:
 				core.progress.combo = 0
-			prints("colliders:", colliders)
 			_attack(colliders, "aoe" if core.progress.exp > aoe_attack_xp else "click")
-	elif context == CoreModel.Context.map_update:
-		_get_closest_enemy()
-		
 
 func _get_colldiers(mouse_pos, radius):
-	print("mouse_pos", mouse_pos)
 	var colliders = aim_cast.get_colldiers(mouse_pos - position, radius)
 	if core.progress.exp > aoe_attack_xp:
 		return colliders
@@ -61,14 +58,13 @@ func _get_colldiers(mouse_pos, radius):
 func _attack(rid_array, attack_type):
 	_update_stats()
 	var damage = core.stats.damage_amp * core.stats.attack_damage
-	print(damage)
 	
 	for i in range(len(rid_array)):
 		if rid_array[i] and rid_array[i] in core.scene.entities:
 			print("%s attacked %s for %s damage" % [
-				core.scene.nodes[rid].name, 
-				core.scene.nodes[rid_array[i]].name,
-				damage
+				core.scene.entities[rid].name, 
+				core.scene.entities[rid_array[i]].name + str(rid_array[i]),
+				damage,
 				])
 			core.emit_changed(CoreModel.Context.damage_started, 
 			{
@@ -91,7 +87,7 @@ func _get_closest_enemy():
 	var ents = core.scene.entities
 	var dist_closest
 	for ent_rid in ents.keys():
-		if ent_rid == rid:
+		if ent_rid == rid or ents[ent_rid].hp <= 0:
 			continue
 		var player_dist = (ents[ent_rid].position - position).length()
 		if (!dist_closest or player_dist < dist_closest):
