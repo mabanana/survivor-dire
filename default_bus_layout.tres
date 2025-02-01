@@ -1,6 +1,9 @@
-[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://bjwdx6kb76cqg"]
+[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://bjwdx6kb76cqg"]
 
 [sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_7ixxm"]
+resource_name = "Compressor"
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_ik26e"]
 resource_name = "Compressor"
 
 [resource]
@@ -12,3 +15,17 @@ bus/1/mute = false
 bus/1/bypass_fx = false
 bus/1/volume_db = 0.0
 bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectCompressor_ik26e")
+bus/1/effect/0/enabled = true
+bus/2/name = &"HitFx"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Notification"
+bus/3/name = &"BGM"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = 0.0
+bus/3/send = &"Master"
