@@ -4,6 +4,7 @@ extends Control
 var core: CoreModel
 var core_changed: Signal
 
+@onready var volume_slider: HSlider = %VolumeSlider
 @onready var hp_num: Label = %HpNum
 @onready var xp_num: Label = %XpNum
 @onready var combo: Label = %Combo
@@ -15,8 +16,10 @@ var core_changed: Signal
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
+	volume_slider.value_changed.connect(_change_master_volume)
+	volume_slider.drag_ended.connect(func(value_changed):
+		volume_slider.release_focus()
+		)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -48,4 +51,7 @@ func _on_core_changed(context, payload):
 		tween.tween_property(new_pop, "modulate/a", 1, 0.3)
 		tween.set_ease(Tween.EASE_OUT)
 		tween.tween_callback(new_pop.queue_free)
-		
+
+func _change_master_volume(value):
+	var db = -16 + value/100 * 16
+	AudioServer.set_bus_volume_db(0, db)

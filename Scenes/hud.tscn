@@ -97,3 +97,25 @@ unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("2_jdari")
 expand_mode = 2
+
+[node name="TopRight" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="Label" type="Label" parent="TopRight"]
+layout_mode = 2
+text = "Volume"
+vertical_alignment = 1
+
+[node name="VolumeSlider" type="HSlider" parent="TopRight"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+value = 100.0
+scrollable = false

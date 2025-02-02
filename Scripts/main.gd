@@ -132,6 +132,7 @@ func _spawn_enemy(entity_type, spawn_pos = _random_spawn_pos()):
 	node.position = spawn_pos + core.scene.player_pos
 	prints("Enemy spawned at", node.position)
 
+# TODO despawn upon distance to player too high
 func _despawn_enemy(rid):
 	var node: GameCharacter = core.scene.nodes[rid]
 	var entity: EntityModel = core.scene.entities[rid]
