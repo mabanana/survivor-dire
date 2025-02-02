@@ -7,8 +7,9 @@ var sounds: Dictionary
 var sounds_dir = "res://Resources/Sounds/"
 var master_player: AudioStreamPlayer
 var bgm_player: AudioStreamPlayer
-var notif_player: AudioStreamPlayer
-var hit_fx_player: AudioStreamPlayer
+var notif_player: AudioStreamPlayer2D
+var auto_player: AudioStreamPlayer
+var click_player: AudioStreamPlayer
 
 func _init(main_scene: Main):
 	self.main_scene = main_scene
@@ -30,15 +31,24 @@ func _init_sounds_dict():
 func init_audio_stream_players():
 	master_player = AudioStreamPlayer.new()
 	bgm_player = AudioStreamPlayer.new()
-	notif_player = AudioStreamPlayer.new()
-	hit_fx_player = AudioStreamPlayer.new()
+	notif_player = AudioStreamPlayer2D.new()
+	auto_player = AudioStreamPlayer.new()
+	click_player = AudioStreamPlayer.new()
 	
-	hit_fx_player.set_max_polyphony(10)
+	master_player.bus = "Master"
+	bgm_player.bus = "BGM"
+	notif_player.bus = "Notification"
+	auto_player.bus = "AutoHit"
+	click_player.bus = "ClickHit"
+	
+	
+	auto_player.set_max_polyphony(10)
 	
 	main_scene.add_child(master_player)
 	main_scene.add_child(bgm_player)
 	main_scene.add_child(notif_player)
-	main_scene.add_child(hit_fx_player)
+	main_scene.add_child(auto_player)
+	main_scene.add_child(click_player)
 
 
 func bind(core: CoreModel, core_changed):
@@ -51,13 +61,13 @@ func _on_core_changed(context, payload):
 	if context == core.Context.damage_ended:
 		match payload[core.PKey.attack_type]:
 			"auto":
-				_play_audio("auto_attack", -10, "AutoHit", Vector2(1.8,1.9))
+				_play_audio("auto_attack", -15, "AutoHit", Vector2(1.2,1.9))
 			"aoe":
-				_play_audio("aoe_attack", -20, "ClickHit", Vector2(0.8,0.9))
+				_play_audio("aoe_attack", -15, "ClickHit", Vector2(0.8,0.9))
 			"click":
 				_play_audio("click_attack", -18, "ClickHit", Vector2(0.8,0.9))
 			_:
-				_play_audio("auto_attack", -10, "AutoHit", Vector2(1.8,1.9))
+				_play_audio("auto_attack", -15, "AutoHit", Vector2(1.8,1.9))
 	elif context == core.Context.loot_dropped:
 		match payload[core.PKey.loot_type]:
 			"Gold":
@@ -81,12 +91,16 @@ func _play_audio(sound_name: String, db_offset: float, bus = "Master", pitch_ran
 			audio_player = bgm_player
 		"Notification":
 			audio_player = notif_player
-		"HitFx":
-			audio_player = hit_fx_player
+		"AutoHit":
+			audio_player = auto_player
+		"ClickHit":
+			audio_player = click_player
 		_:
 			audio_player = master_player
 	audio_player.volume_db = db_offset
 	audio_player.stream = load(sounds[sound_name])
 	audio_player.pitch_scale = randf_range(pitch_range.x, pitch_range.y)
+	if bus == "Notification":
+		audio_player.position = core.scene.player_pos + Vector2.LEFT * 5
 	audio_player.play()
 	

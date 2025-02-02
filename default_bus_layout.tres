@@ -1,10 +1,39 @@
-[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://bjwdx6kb76cqg"]
+[gd_resource type="AudioBusLayout" load_steps=7 format=3 uid="uid://c6uxyhsk4cmcq"]
 
 [sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_7ixxm"]
 resource_name = "Compressor"
 
 [sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_ik26e"]
 resource_name = "Compressor"
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_laow7"]
+resource_name = "Compressor"
+
+[sub_resource type="AudioEffectEQ10" id="AudioEffectEQ10_5l4pt"]
+resource_name = "EQ10"
+band_db/125_hz = -15.2
+band_db/250_hz = -21.6
+band_db/500_hz = -23.2
+band_db/1000_hz = -17.6
+band_db/2000_hz = -20.0
+band_db/4000_hz = -17.6
+band_db/8000_hz = -18.0
+band_db/16000_hz = -21.6
+
+[sub_resource type="AudioEffectEQ10" id="AudioEffectEQ10_dwata"]
+resource_name = "EQ10"
+band_db/500_hz = 8.8
+band_db/1000_hz = 12.8
+band_db/2000_hz = 4.8
+band_db/4000_hz = -4.8
+band_db/8000_hz = -7.2
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_1voer"]
+resource_name = "Reverb"
+room_size = 0.36
+damping = 0.63
+dry = 0.95
+wet = 0.16
 
 [resource]
 bus/0/effect/0/effect = SubResource("AudioEffectCompressor_7ixxm")
@@ -23,6 +52,8 @@ bus/2/mute = false
 bus/2/bypass_fx = false
 bus/2/volume_db = 0.0
 bus/2/send = &"Notification"
+bus/2/effect/0/effect = SubResource("AudioEffectCompressor_laow7")
+bus/2/effect/0/enabled = true
 bus/3/name = &"BGM"
 bus/3/solo = false
 bus/3/mute = false
@@ -33,11 +64,17 @@ bus/4/name = &"AutoHit"
 bus/4/solo = false
 bus/4/mute = false
 bus/4/bypass_fx = false
-bus/4/volume_db = 0.0
+bus/4/volume_db = -11.9576
 bus/4/send = &"HitFx"
+bus/4/effect/0/effect = SubResource("AudioEffectEQ10_5l4pt")
+bus/4/effect/0/enabled = true
 bus/5/name = &"ClickHit"
 bus/5/solo = false
 bus/5/mute = false
 bus/5/bypass_fx = false
 bus/5/volume_db = 0.0
 bus/5/send = &"HitFx"
+bus/5/effect/0/effect = SubResource("AudioEffectEQ10_dwata")
+bus/5/effect/0/enabled = true
+bus/5/effect/1/effect = SubResource("AudioEffectReverb_1voer")
+bus/5/effect/1/enabled = true

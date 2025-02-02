@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bdq2yhcky3cms"]
+[gd_scene load_steps=6 format=3 uid="uid://bdq2yhcky3cms"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_a3nbv"]
 [ext_resource type="Script" path="res://Scripts/parallax_layer.gd" id="2_gg16x"]
@@ -11,6 +11,16 @@ height = 1296
 seamless = true
 seamless_blend_skirt = 1.0
 noise = SubResource("FastNoiseLite_5rhky")
+
+[sub_resource type="Environment" id="Environment_bwd4d"]
+background_mode = 2
+background_energy_multiplier = 0.0
+ambient_light_energy = 0.0
+glow_enabled = true
+glow_intensity = 1.81
+glow_bloom = 0.38
+glow_hdr_threshold = 1.42
+fog_enabled = true
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_a3nbv")
@@ -27,3 +37,6 @@ texture = SubResource("NoiseTexture2D_ojuen")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_bwd4d")

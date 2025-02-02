@@ -7,6 +7,7 @@ extends Node2D
 @onready var donut_scene: PackedScene = preload("res://Scenes/donut_enemy.tscn")
 @onready var sm_circle_scene: PackedScene = preload("res://Scenes/small_circle_enemy.tscn")
 @onready var hud_scene: PackedScene = preload("res://Scenes/hud.tscn")
+@onready var bullet_scene: PackedScene = preload("res://Scenes/bullet.tscn")
 var player: PlayerController
 
 var core: CoreModel
@@ -158,6 +159,7 @@ func _damage_event(payload):
 	var attack_type = payload[core.PKey.attack_type]
 	
 	for rid in target_rids:
+		_spawn_bullet(core.scene.nodes[rid].position)
 		core.scene.entities[rid].hp -= amount
 		print("%s took %s damage from %s" % [
 			core.scene.nodes[rid].name,
@@ -199,3 +201,9 @@ func _spawn_small_circles(position):
 func _on_donut_center_click():
 	core.progress.combo = 0
 	print("Main: Don't press the center of the donut, combo removed")
+
+func _spawn_bullet(dest):
+	var new_bullet: BulletMesh = bullet_scene.instantiate()
+	new_bullet.position = player.position
+	new_bullet.dest = dest
+	add_child(new_bullet)

@@ -1,0 +1,18 @@
+[gd_scene load_steps=6 format=3 uid="uid://bg40e2b4a62w7"]
+
+[ext_resource type="Shader" uid="uid://bay35susthc6b" path="res://Resources/bullet.tres" id="1_asl3b"]
+[ext_resource type="Script" path="res://Scenes/bullet.gd" id="2_kjg6e"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7fbnv"]
+shader = ExtResource("1_asl3b")
+
+[sub_resource type="BoxMesh" id="BoxMesh_4uo4e"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_10kkq"]
+
+[node name="BulletShape" type="MeshInstance2D"]
+material = SubResource("ShaderMaterial_7fbnv")
+scale = Vector2(20, 20)
+mesh = SubResource("BoxMesh_4uo4e")
+texture = SubResource("PlaceholderTexture2D_10kkq")
+script = ExtResource("2_kjg6e")
