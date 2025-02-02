@@ -32,6 +32,7 @@ func _process(delta: float) -> void:
 			if cd == attack_cd:
 				attack_cd.reset_cd(1/core.stats.attack_speed)
 				if core.progress.exp > aoe_attack_xp:
+					_get_closest_enemy()
 					_attack(_get_colldiers(aim_cast.position, core.stats.spell_radius), "aoe")
 				else:
 					_get_closest_enemy()

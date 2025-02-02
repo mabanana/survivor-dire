@@ -51,13 +51,13 @@ func _on_core_changed(context, payload):
 	if context == core.Context.damage_ended:
 		match payload[core.PKey.attack_type]:
 			"auto":
-				_play_audio("auto_attack", -10, "HitFx", Vector2(1.8,1.9))
+				_play_audio("auto_attack", -10, "AutoHit", Vector2(1.8,1.9))
 			"aoe":
-				_play_audio("aoe_attack", -20, "HitFx", Vector2(0.8,0.9))
+				_play_audio("aoe_attack", -20, "ClickHit", Vector2(0.8,0.9))
 			"click":
-				_play_audio("click_attack", -18, "HitFx", Vector2(0.8,0.9))
+				_play_audio("click_attack", -18, "ClickHit", Vector2(0.8,0.9))
 			_:
-				_play_audio("auto_attack", -10, "HitFx", Vector2(1.8,1.9))
+				_play_audio("auto_attack", -10, "AutoHit", Vector2(1.8,1.9))
 	elif context == core.Context.loot_dropped:
 		match payload[core.PKey.loot_type]:
 			"Gold":
