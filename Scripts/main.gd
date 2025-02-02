@@ -138,11 +138,7 @@ func _despawn_enemy(rid):
 	var node: GameCharacter = core.scene.nodes[rid]
 	var entity: EntityModel = core.scene.entities[rid]
 	prints(entity.name, "despawned")
-	core.emit_changed(core.Context.enemy_died, {
-		CoreModel.PKey.target_rid: rid,
-		CoreModel.PKey.target_position: entity.position,
-		CoreModel.PKey.loot_class: entity.loot_class,
-	})
+	
 	core.scene.entities.erase(rid)
 	core.scene.nodes.erase(rid)
 	node.die()
@@ -153,6 +149,11 @@ func _on_enemy_death(rid):
 	# TODO: put progression somewhere else
 	core.progress.exp += 1
 	core.progress.kill_count += 1
+	core.emit_changed(core.Context.enemy_died, {
+		CoreModel.PKey.target_rid: rid,
+		CoreModel.PKey.target_position: entity.position,
+		CoreModel.PKey.loot_class: entity.loot_class,
+	})
 
 func _damage_event(payload):
 	var target_rids = payload[core.PKey.target_rid]
