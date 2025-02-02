@@ -94,8 +94,11 @@ func _update_map():
 	for rid in core.scene.entities.keys():
 		core.scene.entities[rid].position = core.scene.nodes[rid].position
 		if rid != player.rid: # for enemies
+			var dist_to_player = player.position - core.scene.nodes[rid].position
 			if core.scene.entities[rid].hp <= 0:
 				_on_enemy_death(rid)
+				_despawn_enemy(rid)
+			elif dist_to_player.length() > 2000:
 				_despawn_enemy(rid)
 	core.emit_changed(core.Context.map_update, null)
 
