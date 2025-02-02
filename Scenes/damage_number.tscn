@@ -3,4 +3,6 @@
 [ext_resource type="Script" path="res://damage_number.gd" id="1_lnm2e"]
 
 [node name="DamageNumber" type="Label"]
+theme_override_font_sizes/font_size = 16
+text = "12"
 script = ExtResource("1_lnm2e")

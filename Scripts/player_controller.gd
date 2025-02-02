@@ -76,7 +76,7 @@ func _attack(rid_array, attack_type):
 
 func _update_stats():
 	core.stats.damage_amp = max(log(core.progress.combo) * core.stats.START_DA * 5, core.stats.START_DA)
-	core.stats.attack_speed = max(log(core.progress.combo) * core.stats.START_AS / log(10), core.stats.START_AS) + core.progress.items["Attackspeed+"]
+	core.stats.attack_speed = min(max(log(core.progress.combo) * core.stats.START_AS / log(10), core.stats.START_AS) + core.progress.items["Attackspeed+"], 10.0)
 	core.stats.attack_damage = core.stats.START_AD + (core.progress.items["Attack+"] * 5)
 	prints("LootManager:", core.progress.items)
 
