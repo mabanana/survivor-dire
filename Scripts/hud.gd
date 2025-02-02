@@ -44,7 +44,7 @@ func _on_core_changed(context, payload):
 		new_pop.position = inventory.position
 		new_pop.modulate.a = 0.7
 		var vert = inventory.get_rect().size.y
-		var new_pos = position - Vector2(0, vert * 1.5)
+		var new_pos = position - Vector2(0, vert * randf_range(1.5, 4))
 		inventory.add_child(new_pop)
 		var tween: Tween = get_tree().create_tween()
 		tween.tween_property(new_pop, "position", new_pos, 0.6)
