@@ -38,10 +38,11 @@ func _process(delta: float) -> void:
 
 func _on_core_changed(context, payload):
 	if context == CoreModel.Context.mouse_button_pressed:
+		
 		if payload[CoreModel.PKey.input_action] == InputHandler.PlayerActions.AIM_ATTACK:
 			var radius = core.stats.spell_radius if core.progress.exp > aoe_attack_xp else 1
 			var colliders = _get_colldiers(payload[CoreModel.PKey.mouse_position], radius)
-			if len(colliders) == 0:
+			if len(colliders) == 0 and get_viewport().gui_get_hovered_control() is HudController:
 				core.progress.combo = 0
 			_attack(colliders, "aoe" if core.progress.exp > aoe_attack_xp else "click")
 
