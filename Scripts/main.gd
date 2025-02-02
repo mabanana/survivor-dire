@@ -8,6 +8,7 @@ extends Node2D
 @onready var sm_circle_scene: PackedScene = preload("res://Scenes/small_circle_enemy.tscn")
 @onready var hud_scene: PackedScene = preload("res://Scenes/hud.tscn")
 @onready var bullet_scene: PackedScene = preload("res://Scenes/bullet.tscn")
+@onready var damage_number_scene: PackedScene = preload("res://Scenes/damage_number.tscn")
 var player: PlayerController
 
 var core: CoreModel
@@ -161,6 +162,7 @@ func _damage_event(payload):
 	
 	for rid in target_rids:
 		_spawn_bullet(core.scene.nodes[rid].position)
+		_spawn_damage_number(core.scene.nodes[rid].position, amount)
 		core.scene.entities[rid].hp -= amount
 		print("%s took %s damage from %s" % [
 			core.scene.nodes[rid].name,
@@ -173,6 +175,7 @@ func _damage_event(payload):
 			core.PKey.dealer_rid : dealer,
 			core.PKey.attack_type : attack_type,
 		})
+		
 		var node:CharacterBody2D = core.scene.nodes[rid]
 		node.velocity = (node.position - player.position).normalized()*30
 		node.move_and_slide()
@@ -208,3 +211,9 @@ func _spawn_bullet(dest):
 	new_bullet.position = player.position
 	new_bullet.dest = dest
 	add_child(new_bullet)
+
+func _spawn_damage_number(pos, amount):
+	var num = damage_number_scene.instantiate()
+	num.text = str(roundi(amount))
+	num.position = pos
+	add_child(num)
